@@ -15,7 +15,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://hamrogamingstore.com/api/:path*',
+        destination: 'https://hamrogamingstore.com/backend/api/:path*',
       },
     ];
   },
