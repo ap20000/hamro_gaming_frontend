@@ -1004,9 +1004,9 @@ export default function GameForm({
                             </button>
                           </div>
                         </div>
-                        <div className="text-sm text-gaming-gray/40">
-                          Password: {account.password.replace(/./g, "*")}
-                        </div>
+                       <div className="text-sm text-gaming-gray/40">
+  Password: {account.password ? account.password.replace(/./g, "*") : "Not set"}
+</div>
                       </div>
                     ))}
 
