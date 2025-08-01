@@ -171,7 +171,9 @@ export default function GameForm({
           const baseUrl = API_BASE_URL.replace("/api", "");
           fullImageUrl = `${baseUrl}${game.image}`;
         }
-        fullImageUrl = fullImageUrl.replace(/\\/g, "/");
+            if (fullImageUrl) {
+  fullImageUrl = fullImageUrl.replace(/\\/g, "/");
+}
         setImagePreview(fullImageUrl);
       }
     }
@@ -1010,7 +1012,7 @@ export default function GameForm({
                           </div>
                         </div>
                        <div className="text-sm text-gaming-gray/40">
-  Password: {account.password}
+  Password: {account.password ? account.password : "Not set"}
 </div>
                       </div>
                     ))}
