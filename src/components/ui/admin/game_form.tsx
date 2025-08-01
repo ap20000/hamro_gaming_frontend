@@ -238,8 +238,7 @@ export default function GameForm({
         !formData.sharedAccount.label ||
         !formData.sharedAccount.password ||
         !formData.sharedAccount.price ||
-        formData.sharedAccount.quantity <= 0
-      ) {
+(formData.sharedAccount.quantity ?? 0) <= 0      ) {
         newErrors.sharedAccount =
           "Shared account details are required and quantity must be greater than 0";
       }
