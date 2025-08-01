@@ -152,7 +152,7 @@ export default function GameForm({
         initialData.accountType = game.accountType || "private";
         if (game.sharedAccount) {
           initialData.sharedAccount = {
-            label: accountInput.label,
+            label: game.sharedAccount.label || "",
             email: game.sharedAccount.email,
             password: game.sharedAccount.password,
             code: game.sharedAccount.code || "",
