@@ -118,66 +118,67 @@ export default function GameForm({
   });
 
   useEffect(() => {
-    if (game && isEditing) {
-      const initialData: GameFormData = {
-        name: game.name,
-        description: game.description,
-        image: game.image,
-        deliveryTime: game.deliveryTime,
-        platform: game.platform,
-        region: game.region,
-        gameType: game.gameType,
-        status: game.status,
-        productType: game.productType || "topup",
-        itemType: game.itemType || "",
-        topupOptions: game.topupOptions || [],
-        giftcardAmountOptions: game.giftcardAmountOptions || [],
-        keys: game.keys || [],
-        accounts:
-          game.accounts?.map((acc) => ({
-            ...acc,
-            used: acc.used || false,
-            password: acc.password || "", 
-    email: acc.email || "",      
-    label: acc.label || "",       
-    code: acc.code || null,      
-    price: acc.price || "",     
-          })) || [],
-        expirationDate: game.expirationDate || "",
-         sharedAccount: undefined
-      };
+  if (game && isEditing) {
+    const initialData: GameFormData = {
+      name: game.name,
+      description: game.description,
+      image: game.image,
+      deliveryTime: game.deliveryTime,
+      platform: game.platform,
+      region: game.region,
+      gameType: game.gameType,
+      status: game.status,
+      productType: game.productType || "topup",
+      itemType: game.itemType || "",
+      topupOptions: game.topupOptions || [],
+      giftcardAmountOptions: game.giftcardAmountOptions || [],
+      keys: game.keys || [],
+      accounts:
+        game.accounts?.map((acc) => ({
+          ...acc,
+          used: acc.used || false,
+          password: acc.password || "",
+          email: acc.email || "",
+          label: acc.label || "",
+          code: acc.code || null,
+          price: acc.price || "",
+        })) || [],
+      expirationDate: game.expirationDate || "",
+      sharedAccount: undefined,
+    };
 
-      if (game.productType === "account") {
-        initialData.accountType = game.accountType || "private";
-        
+    if (game.productType === "account") {
+      initialData.accountType = game.accountType || "private";
+
       if (game.accountType === "shared" && game.sharedAccount) {
-        if (game.sharedAccount) {
-          initialData.sharedAccount = {
-            label: game.sharedAccount.label || "",
-            email: game.sharedAccount.email,
-            password: game.sharedAccount.password,
-            code: game.sharedAccount.code || "",
-            price: game.sharedAccount.price,
-            quantity: game.sharedAccount.quantity || 0,
-          };
-        }
+        initialData.sharedAccount = {
+          label: game.sharedAccount.label || "",
+          email: game.sharedAccount.email,
+          password: game.sharedAccount.password,
+          code: game.sharedAccount.code || "",
+          price: game.sharedAccount.price,
+          quantity: game.sharedAccount.quantity || 0,
+        };
+      }
+    }
+
+    setFormData(initialData);
+
+    if (game.image) {
+      let fullImageUrl = game.image;
+      if (!game.image.startsWith("http")) {
+        const baseUrl = API_BASE_URL.replace("/api", "");
+        fullImageUrl = `${baseUrl}${game.image}`;
       }
 
-      setFormData(initialData);
-
-      if (game.image) {
-        let fullImageUrl = game.image;
-        if (!game.image.startsWith("http")) {
-          const baseUrl = API_BASE_URL.replace("/api", "");
-          fullImageUrl = `${baseUrl}${game.image}`;
-        }
       if (fullImageUrl) {
         fullImageUrl = fullImageUrl.replace(/\\/g, "/");
-      }
         setImagePreview(fullImageUrl);
       }
     }
-  }, [game, isEditing]);
+  }
+}, [game, isEditing]);
+
 
   const handleSharedAccountChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
