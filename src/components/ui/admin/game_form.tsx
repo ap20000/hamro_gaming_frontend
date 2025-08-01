@@ -137,6 +137,11 @@ export default function GameForm({
           game.accounts?.map((acc) => ({
             ...acc,
             used: acc.used || false,
+            password: acc.password || "", 
+    email: acc.email || "",      
+    label: acc.label || "",       
+    code: acc.code || null,      
+    price: acc.price || "",     
           })) || [],
         expirationDate: game.expirationDate || "",
          sharedAccount: undefined
@@ -1005,7 +1010,7 @@ export default function GameForm({
                           </div>
                         </div>
                        <div className="text-sm text-gaming-gray/40">
-  Password: {account.password ? account.password.replace(/./g, "*") : "Not set"}
+  Password: {account.password}
 </div>
                       </div>
                     ))}
