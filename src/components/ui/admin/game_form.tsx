@@ -84,21 +84,29 @@ export default function GameForm({
   });
 
   const [formData, setFormData] = useState<GameFormData>({
-    name: "",
-    description: "",
-    image: "",
-    deliveryTime: "",
-    platform: "",
-    region: "",
-    gameType: "",
-    status: "active",
-    productType: "topup",
-    itemType: "",
-    topupOptions: [],
-    giftcardAmountOptions: [],
-    keys: [],
-    accounts: [],
-  });
+  name: "",
+  description: "",
+  image: "",
+  deliveryTime: "",
+  platform: "",
+  region: "",
+  gameType: "",
+  status: "active",
+  productType: "topup",
+  itemType: "",
+  topupOptions: [],
+  giftcardAmountOptions: [],
+  keys: [],
+  accounts: [],
+  sharedAccount: { // Initialize sharedAccount with default values
+    email: "",
+    password: "",
+    code: "",
+    quantity: 0,
+    label: "",
+    price: "",
+  },
+});
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [imageFile, setImageFile] = useState<File | null>(null);
