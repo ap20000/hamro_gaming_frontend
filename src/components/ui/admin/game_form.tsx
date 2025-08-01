@@ -9,7 +9,7 @@ import ErrorMessage from "../error_message";
 import SuccessMessage from "../success_message";
 import { API_BASE_URL } from "@/config/config";
 import DefaultImg from "../../../../public/images/authBg.jpg";
-
+      
 interface GameFormProps {
   game?: Game;
   onSubmit: (gameData: FormData) => Promise<void>;
@@ -29,12 +29,12 @@ export interface Account {
 }
 
 interface SharedAccount {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
   code?: string | null;
-  quantity: number;
-  label: string;
-  price: string;
+  quantity?: number;
+  label?: string;
+  price?: string;
 }
 
 interface GameFormData {
@@ -98,14 +98,7 @@ export default function GameForm({
   giftcardAmountOptions: [],
   keys: [],
   accounts: [],
-  sharedAccount: { // Initialize sharedAccount with default values
-    email: "",
-    password: "",
-    code: "",
-    quantity: 0,
-    label: "",
-    price: "",
-  },
+  sharedAccount: undefined
 });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -146,10 +139,13 @@ export default function GameForm({
             used: acc.used || false,
           })) || [],
         expirationDate: game.expirationDate || "",
+         sharedAccount: undefined
       };
 
       if (game.productType === "account") {
         initialData.accountType = game.accountType || "private";
+        
+      if (game.accountType === "shared" && game.sharedAccount) {
         if (game.sharedAccount) {
           initialData.sharedAccount = {
             label: game.sharedAccount.label || "",
