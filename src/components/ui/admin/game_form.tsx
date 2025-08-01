@@ -171,9 +171,9 @@ export default function GameForm({
           const baseUrl = API_BASE_URL.replace("/api", "");
           fullImageUrl = `${baseUrl}${game.image}`;
         }
-            if (fullImageUrl) {
-  fullImageUrl = fullImageUrl.replace(/\\/g, "/");
-}
+      if (fullImageUrl) {
+        fullImageUrl = fullImageUrl.replace(/\\/g, "/");
+      }
         setImagePreview(fullImageUrl);
       }
     }
