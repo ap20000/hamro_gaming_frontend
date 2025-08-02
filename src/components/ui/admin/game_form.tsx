@@ -156,18 +156,29 @@ export default function GameForm({
 
       setFormData(initialData);
 
-      if (game.image) {
-        let fullImageUrl = game.image;
-        if (!game.image.startsWith("http")) {
-          const baseUrl = API_BASE_URL.replace("/api", "");
-          fullImageUrl = `${baseUrl}${game.image}`;
-        }
-        fullImageUrl = fullImageUrl.replace(/\\/g, "/");
-        setImagePreview(fullImageUrl);
-      }
-    }
-  }, [game, isEditing]);
+    if (game.image) {
+  let fullImageUrl = game.image;
 
+  if (!game.image.startsWith("http")) {
+    const baseUrl = new URL(API_BASE_URL);
+    // Remove "/api" from pathname without using replace()
+    const pathParts = baseUrl.pathname.split('/');
+    if (pathParts[pathParts.length - 1] === 'api') {
+      pathParts.pop();
+      baseUrl.pathname = pathParts.join('/');
+    }
+
+    // Handle the image path
+    const imagePath = game.image.startsWith('/') 
+      ? game.image.substring(1) 
+      : game.image;
+
+    // Construct the full URL
+    fullImageUrl = new URL(imagePath, baseUrl).toString();
+  }
+
+  setImagePreview(fullImageUrl);
+}
  const handleSharedAccountChange = (
   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 ) => {
