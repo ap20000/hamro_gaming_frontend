@@ -9,7 +9,7 @@ import ErrorMessage from "../error_message";
 import SuccessMessage from "../success_message";
 import { API_BASE_URL } from "@/config/config";
 import DefaultImg from "../../../../public/images/authBg.jpg";
-      
+
 interface GameFormProps {
   game?: Game;
   onSubmit: (gameData: FormData) => Promise<void>;
@@ -29,12 +29,12 @@ export interface Account {
 }
 
 interface SharedAccount {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
   code?: string | null;
-  quantity?: number;
-  label?: string;
-  price?: string;
+  quantity: number;
+  label: string;
+  price: string;
 }
 
 interface GameFormData {
@@ -84,22 +84,21 @@ export default function GameForm({
   });
 
   const [formData, setFormData] = useState<GameFormData>({
-  name: "",
-  description: "",
-  image: "",
-  deliveryTime: "",
-  platform: "",
-  region: "",
-  gameType: "",
-  status: "active",
-  productType: "topup",
-  itemType: "",
-  topupOptions: [],
-  giftcardAmountOptions: [],
-  keys: [],
-  accounts: [],
-  sharedAccount: undefined
-});
+    name: "",
+    description: "",
+    image: "",
+    deliveryTime: "",
+    platform: "",
+    region: "",
+    gameType: "",
+    status: "active",
+    productType: "topup",
+    itemType: "",
+    topupOptions: [],
+    giftcardAmountOptions: [],
+    keys: [],
+    accounts: [],
+  });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -118,65 +117,56 @@ export default function GameForm({
   });
 
   useEffect(() => {
-  if (game && isEditing) {
-    const initialData: GameFormData = {
-      name: game.name,
-      description: game.description,
-      image: game.image,
-      deliveryTime: game.deliveryTime,
-      platform: game.platform,
-      region: game.region,
-      gameType: game.gameType,
-      status: game.status,
-      productType: game.productType || "topup",
-      itemType: game.itemType || "",
-      topupOptions: game.topupOptions || [],
-      giftcardAmountOptions: game.giftcardAmountOptions || [],
-      keys: game.keys || [],
-      accounts:
-        game.accounts?.map((acc) => ({
-          ...acc,
-          used: acc.used || false,
-          password: acc.password || "",
-          email: acc.email || "",
-          label: acc.label || "",
-          code: acc.code || null,
-          price: acc.price || "",
-        })) || [],
-      expirationDate: game.expirationDate || "",
-      sharedAccount: undefined,
-    };
+    if (game && isEditing) {
+      const initialData: GameFormData = {
+        name: game.name,
+        description: game.description,
+        image: game.image,
+        deliveryTime: game.deliveryTime,
+        platform: game.platform,
+        region: game.region,
+        gameType: game.gameType,
+        status: game.status,
+        productType: game.productType || "topup",
+        itemType: game.itemType || "",
+        topupOptions: game.topupOptions || [],
+        giftcardAmountOptions: game.giftcardAmountOptions || [],
+        keys: game.keys || [],
+        accounts:
+          game.accounts?.map((acc) => ({
+            ...acc,
+            used: acc.used || false,
+          })) || [],
+        expirationDate: game.expirationDate || "",
+      };
 
-    if (game.productType === "account") {
-      initialData.accountType = game.accountType || "private";
-      if (game.accountType === "shared" && game.sharedAccount) {
-        initialData.sharedAccount = {
-          label: game.sharedAccount.label || "",
-          email: game.sharedAccount.email,
-          password: game.sharedAccount.password,
-          code: game.sharedAccount.code || "",
-          price: game.sharedAccount.price,
-          quantity: game.sharedAccount.quantity || 0,
-        };
+      if (game.productType === "account") {
+        initialData.accountType = game.accountType || "private";
+        if (game.sharedAccount) {
+          initialData.sharedAccount = {
+            label: accountInput.label,
+            email: game.sharedAccount.email,
+            password: game.sharedAccount.password,
+            code: game.sharedAccount.code || "",
+            price: game.sharedAccount.price,
+            quantity: game.sharedAccount.quantity || 0,
+          };
+        }
       }
-    }
 
-    setFormData(initialData);
+      setFormData(initialData);
 
-    if (game.image) {
-      let fullImageUrl = game.image;
-      if (!game.image.startsWith("http")) {
-        const baseUrl = API_BASE_URL.replace("/api", "");
-        fullImageUrl = `${baseUrl}${game.image}`;
-      }
-      if (fullImageUrl) {
+      if (game.image) {
+        let fullImageUrl = game.image;
+        if (!game.image.startsWith("http")) {
+          const baseUrl = API_BASE_URL.replace("/api", "");
+          fullImageUrl = `${baseUrl}${game.image}`;
+        }
         fullImageUrl = fullImageUrl.replace(/\\/g, "/");
+        setImagePreview(fullImageUrl);
       }
-      setImagePreview(fullImageUrl);
     }
-  }
-}, [game, isEditing]);
-
+  }, [game, isEditing]);
 
   const handleSharedAccountChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -238,7 +228,8 @@ export default function GameForm({
         !formData.sharedAccount.label ||
         !formData.sharedAccount.password ||
         !formData.sharedAccount.price ||
-(formData.sharedAccount.quantity ?? 0) <= 0      ) {
+        formData.sharedAccount.quantity <= 0
+      ) {
         newErrors.sharedAccount =
           "Shared account details are required and quantity must be greater than 0";
       }
@@ -1009,9 +1000,9 @@ export default function GameForm({
                             </button>
                           </div>
                         </div>
-                       <div className="text-sm text-gaming-gray/40">
-  Password: {account.password ? account.password : "Not set"}
-</div>
+                        <div className="text-sm text-gaming-gray/40">
+                          Password: {account.password.replace(/./g, "*")}
+                        </div>
                       </div>
                     ))}
 
