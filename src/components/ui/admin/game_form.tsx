@@ -144,7 +144,7 @@ export default function GameForm({
         initialData.accountType = game.accountType || "private";
         if (game.sharedAccount) {
           initialData.sharedAccount = {
-            label: accountInput.label,
+            label: game.sharedAccount.label,
             email: game.sharedAccount.email,
             password: game.sharedAccount.password,
             code: game.sharedAccount.code || "",
@@ -168,26 +168,30 @@ export default function GameForm({
     }
   }, [game, isEditing]);
 
-  const handleSharedAccountChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
+ const handleSharedAccountChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+) => {
+  const { name, value } = e.target;
 
-    setFormData((prev) => ({
+  setFormData((prev) => {
+    const sharedAccount = prev.sharedAccount || {
+      label: "",
+      email: "",
+      password: "",
+      code: "",
+      price: "",
+      quantity: 0,
+    };
+
+    return {
       ...prev,
       sharedAccount: {
-        ...(prev.sharedAccount || {
-          label: "",
-          email: "",
-          password: "",
-          code: "",
-          price: "",
-          quantity: 0,
-        }),
-        [name.replace("sharedAccount", "").replace(/[\[\]]/g, "")]:
-          name.includes("quantity") ? parseInt(value) || 0 : value,
+        ...sharedAccount,
+        [name]: name === "quantity" ? parseInt(value) || 0 : value,
       },
-    }));
+    };
+  });
+};
   };
 
   const validateForm = () => {
@@ -1001,8 +1005,7 @@ export default function GameForm({
                           </div>
                         </div>
                         <div className="text-sm text-gaming-gray/40">
-                          Password: {account.password.replace(/./g, "*")}
-                        </div>
+Password: {account.password ? "••••••••" : "Not set"}                        </div>
                       </div>
                     ))}
 
