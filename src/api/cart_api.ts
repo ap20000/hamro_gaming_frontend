@@ -78,3 +78,27 @@ export async function removeFromCart(productId: string, label: string): Promise<
         throw error;
     }
 }
+
+
+export async function clearUserCart() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/cart/clear`, {
+      method: "POST",
+      credentials: "include", // ⬅️ important for sending cookies/session
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to clear cart");
+    }
+
+    return data.message;
+  } catch (error) {
+    console.error("❌ [clearUserCart] Error:", error.message);
+    throw error;
+  }
+}
