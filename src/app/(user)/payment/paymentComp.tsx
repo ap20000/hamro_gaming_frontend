@@ -6,7 +6,7 @@ import { CreditCard, Gamepad2, Shield } from "lucide-react";
 import Button from "@/components/ui/button";
 import { useQR } from "@/hooks/useQr";
 import { usePlaceOrder } from "@/hooks/useOrder";
-import { clearUserCart } from "@/api/cart";
+
 
 import { API_BASE_URL } from "@/config/config";
 import FullPageLoader from "@/components/ui/full_page_loader";
@@ -82,7 +82,7 @@ export default function PaymentPage() {
       }
 
       await createOrder(orderData);
-      await clearUserCart();
+     
 
       console.log("✅ Order placed successfully!");
     } catch (error) {
