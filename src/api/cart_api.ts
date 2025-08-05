@@ -82,7 +82,7 @@ export async function removeFromCart(productId: string, label: string): Promise<
 
 export async function clearUserCart() {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/cart/clear`, {
+    const res = await fetch(`/api/product/cart/clear`, {
       method: "POST",
       credentials: "include", // ⬅️ important for sending cookies/session
       headers: {
