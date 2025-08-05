@@ -6,8 +6,6 @@ import { CreditCard, Gamepad2, Shield } from "lucide-react";
 import Button from "@/components/ui/button";
 import { useQR } from "@/hooks/useQr";
 import { usePlaceOrder } from "@/hooks/useOrder";
-
-
 import { API_BASE_URL } from "@/config/config";
 import FullPageLoader from "@/components/ui/full_page_loader";
 import ErrorMessage from "@/components/ui/error_message";
