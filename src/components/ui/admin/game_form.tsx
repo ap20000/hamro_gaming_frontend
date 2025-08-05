@@ -155,6 +155,7 @@ export default function GameForm({
       }
 
       setFormData(initialData);
+ 
 
     if (game.image) {
   let fullImageUrl = game.image;
@@ -179,6 +180,9 @@ export default function GameForm({
 
   setImagePreview(fullImageUrl);
 }
+
+    }
+}, [game, isEditing]);
  const handleSharedAccountChange = (
   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 ) => {
@@ -203,7 +207,7 @@ export default function GameForm({
     };
   });
 };
-  };
+  
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
