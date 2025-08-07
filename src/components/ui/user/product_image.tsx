@@ -42,7 +42,7 @@ export default function ProductImage({
       <img
         src={getImageUrl()}
         alt={game.name}
-        className="w-full h-full object-contain rounded-md group-hover:scale-110 transition-transform duration-500"
+        className="w-full h-52 object-contain rounded-md group-hover:scale-110 transition-transform duration-500"
       />
     </div>
   );
