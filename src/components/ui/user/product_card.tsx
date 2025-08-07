@@ -12,11 +12,13 @@ export default function ProductCard({ game }: ProductCardProps) {
   return (
     <div
       className="group bg-[var(--gaming-black)]/80 backdrop-blur-sm rounded-xl border border-[var(--gaming-gray)] 
-     overflow-hidden hover:border-gaming-electric-blue/50 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl
+     overflow-hidden hover:border-gaming-electric-blue/50 transition-all duration-300 hover:transform hover:scale-100 hover:shadow-xl
       hover:shadow-gaming-electric-blue/20 relative"
     >
       {/* Image Container */}
-      <div className="relative aspect-[3/2] w-full">
+{/*       <div className="relative w-full"> */}
+              <div className="relative w-full">
+
         <ProductImage game={game} />
 
         {/* Overlay */}
