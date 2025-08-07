@@ -157,25 +157,32 @@ export default function GameForm({
       setFormData(initialData);
  
 
-    if (game.image) {
+if (game?.image) {
   let fullImageUrl = game.image;
 
-  if (!game.image.startsWith("http")) {
-    const baseUrl = new URL(API_BASE_URL);
-    // Remove "/api" from pathname without using replace()
-    const pathParts = baseUrl.pathname.split('/');
-    if (pathParts[pathParts.length - 1] === 'api') {
-      pathParts.pop();
-      baseUrl.pathname = pathParts.join('/');
+  // Only process relative URLs
+  if (!game.image.startsWith("http") && API_BASE_URL) {
+    try {
+      const baseUrl = new URL(API_BASE_URL);
+      
+      // Safely handle pathname manipulation
+      const pathParts = baseUrl.pathname.split('/').filter(Boolean);
+      if (pathParts[pathParts.length - 1] === 'api') {
+        pathParts.pop();
+      }
+      baseUrl.pathname = pathParts.join('/') || '/';
+
+      // Handle image path (remove leading slash if present)
+      const imagePath = game.image.startsWith('/') 
+        ? game.image.slice(1) 
+        : game.image;
+
+      fullImageUrl = new URL(imagePath, baseUrl).toString();
+    } catch (error) {
+      console.error("Error constructing image URL:", error);
+      // Fallback to original image if URL construction fails
+      fullImageUrl = game.image;
     }
-
-    // Handle the image path
-    const imagePath = game.image.startsWith('/') 
-      ? game.image.substring(1) 
-      : game.image;
-
-    // Construct the full URL
-    fullImageUrl = new URL(imagePath, baseUrl).toString();
   }
 
   setImagePreview(fullImageUrl);
