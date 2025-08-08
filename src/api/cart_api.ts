@@ -98,7 +98,6 @@ export async function clearUserCart() {
 
     return data.message;
   } catch (error) {
-    console.error("❌ [clearUserCart] Error:", error.message);
-    throw error;
+     throw error;
   }
 }
